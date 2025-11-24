@@ -8,8 +8,10 @@
 
 
 **Gameplaykern:**
+als je een meer dan 10 pegs in een keer heb gehit dan krijg je een multiplier.
 
 
 **Structuur van het level:**
 ballen schiet je naar beneden.
-als je een meer dan 10 pegs heb gehit dan krijg je een multiplier.
+je hebt rond de 60 pegs in een level.
+het word elk level moeilijker.
