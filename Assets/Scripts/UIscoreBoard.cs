@@ -3,17 +3,22 @@ using UnityEngine;
 
 public class UIscoreBoard : MonoBehaviour
 {
-    [SerializeField] private TMP_Text scoreField;
+    public TMP_Text scoreField;
     [SerializeField] private TMP_Text multipliererfield;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    
+    private void Start()
     {
-        
+        combosystem.OnScoreChange += UpdateUI;                  
     }
 
-    // Update is called once per frame
-    void Update()
+    
+    private void OnDisable ()
     {
-        
+        combosystem.OnScoreChange -= UpdateUI;                 
+    }
+    private void UpdateUI(int score, int multiplier)    
+    {
+        scoreField.text = $"Score: {score}";
+        multipliererfield.text = $"multiplier: {multiplier}";
     }
 }
