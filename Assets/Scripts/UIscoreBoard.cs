@@ -8,13 +8,13 @@ public class UIscoreBoard : MonoBehaviour
     
     private void Start()
     {
-        combosystem.OnScoreChange += UpdateUI;                  
+        ComboSystem.OnScoreChange += UpdateUI;                  
     }
 
     
     private void OnDisable ()
     {
-        combosystem.OnScoreChange -= UpdateUI;                 
+        ComboSystem.OnScoreChange -= UpdateUI;                 
     }
     private void UpdateUI(int score, int multiplier)    
     {

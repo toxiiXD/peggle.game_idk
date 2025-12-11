@@ -1,30 +1,38 @@
+using System.Collections.Generic;
+using System;
 using UnityEngine;
-
-public class combosystem : MonoBehaviour
+public class ComboSystem : MonoBehaviour
 {
-
-
     public static event Action<int, int> OnScoreChange;
-
-    
-
-    private void CheckForCombo(string tag, int bumperValue) {
-        bumperTags.Add(tag);
-        if (bumperTags.Count > 1) {
+    private List<string> bumperTags = new List<string>();   //lijst met geraakte tags
+    private int scoreMultiplier = 1;
+    private void Start()
+    {
+        BumperHit.onBumperHit += CheckForCombo;             //luisteren naar action event onBumperHit als game start
+    }
+    private void OnDisable()
+    {
+        BumperHit.onBumperHit -= CheckForCombo;             //stop met luisteren naar action event onBumperHit als scene herstart of game stopt
+    }
+    private void CheckForCombo(string tag, int bumperValue)
+    {
+        bumperTags.Add(tag);                                //tag toevoegen aan lijst
+        if (bumperTags.Count > 1)                           //check of er meer dan 1 tag is
+        {                                                   //check of de laatste 2 tags gelijk zijn
             if (bumperTags[bumperTags.Count - 2] == bumperTags[bumperTags.Count - 1])
             {
-                Multiplier++;
+                scoreMultiplier++;                          //verhoog de multiplier
             }
-            else
+            else                                            //als ze niet gelijk zijn
             {
-                Multiplier = 1;
+                scoreMultiplier = 1;                        //reset multiplier
+                bumperTags.Clear();                         //leeg de lijst met tags
             }
-        }
-        ScoreManager.Instance.AddScore(Value * Multiplier);
-       
-        OnScoreChange?.Invoke(ScoreManager.Instance.score, Multiplier);
-        
-        
+        }                                                   //voeg score toe aan de ScoreManager
+        ScoreManager.Instance.AddScore(bumperValue * scoreMultiplier);
 
+        OnScoreChange?.Invoke(ScoreManager.Instance.score, scoreMultiplier);
+                                                            //print score en multiplier in de console
+        //Debug.Log($"Score: {ScoreManager.Instance.score} || Multiplier: {scoreMultiplier}X");
     }
 }
